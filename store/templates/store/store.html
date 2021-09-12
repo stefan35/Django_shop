@@ -1,0 +1,39 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div id="loader"></div>
+    <div class="row" id="store-content">
+        {% for product in products %}
+            <div class="col-lg-4">
+                <img class="thumbnail" src="{{ product.imageURL}}">
+                <div class="box-element product">
+                    <h6><strong>{{ product.name }}</strong></h6>
+                    <hr>
+                    <button data-product="{{ product.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+                    <h4 style="display: inline-block; float: right"><strong>{{ product.price|floatformat:2 }}$</strong></h4>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function (event) {
+            if (!sessionStorage.getItem('doNotShow')){
+                document.getElementById('store-content').classList.add("hidden");
+                document.getElementById('footer-section').classList.add('hidden');
+                setTimeout(removeLoader, 2000);
+                sessionStorage.setItem('doNotShow', 'true');
+            }
+            else {
+                document.getElementById('loader').remove()
+            }
+
+        })
+
+        function removeLoader(){
+            document.getElementById('loader').remove();
+            document.getElementById('store-content').classList.remove("hidden");
+            document.getElementById('footer-section').classList.remove('hidden');
+        }
+    </script>
+{% endblock content %}

@@ -1,0 +1,93 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="row" >
+        <div class="col-lg-4">
+            <div class="box-element">
+                <button id="profile_button" style="display: block;" type="button" class="btn btn-outline-primary btn-lg">Profile</button>
+                <br>
+                <button id="history_button" style="display: block;" type="button" class="btn btn-outline-primary btn-lg">Order History</button>
+                <br>
+                <button id="settings_button" style="display: block;" type="button" class="btn btn-outline-primary btn-lg">Settings</button>
+                <br>
+                <a href="{% url 'logout_request' %}">
+                    <button  style="display: block;" type="button" class="btn btn-outline-primary btn-lg">Log out</button>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div id="profile-page" class="box-element">
+                <div class="image-circle">
+                    <div class="circle"></div>
+                    <img class="profile-img" src="{% static 'images/profile.png' %}">
+                </div>
+                <br>
+                <br>
+                <p style="text-align: center"> Logged in: {{ user }}</p>
+            </div>
+            <div id="history_orders" class="box-element">
+                <h3 style="text-align: center">History of orders</h3>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                          <th scope="col">Date</th>
+                          <th scope="col">Total price</th>
+                          <th scope="col" colspan="max">Products</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product_order_info in history.products %}
+                        <tr>
+                            {% for order_info in product_order_info %}
+                                {% if order_info|length > 0 %}
+                                    <td>
+                                        {% for order_item in order_info %}
+                                            {% if forloop.counter == order_info|length %}
+                                                {{ order_item }}x
+                                            {% else %}
+                                                {{ order_item }}x,
+                                            {% endif %}
+                                        {% endfor %}
+                                    </td>
+                                {% else %}
+                                    <td>{{ order_info }}</td>
+                                {% endif %}
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div id="user_settings" class="box-element">
+                {% include 'store/profile_form.html' %}
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var history_orders = '{{ history_orders }}'
+
+        document.getElementById('button-cart').classList.add('hidden');
+        document.getElementById('history_orders').classList.add('hidden');
+        document.getElementById('user_settings').classList.add('hidden');
+
+        document.getElementById('profile_button').addEventListener('click', function (){
+            document.getElementById('history_orders').classList.add('hidden');
+            document.getElementById('profile-page').classList.remove('hidden');
+            document.getElementById('user_settings').classList.add('hidden');
+        })
+
+        document.getElementById('history_button').addEventListener('click', function (){
+            document.getElementById('history_orders').classList.remove('hidden');
+            document.getElementById('profile-page').classList.add('hidden');
+            document.getElementById('user_settings').classList.add('hidden');
+        })
+
+        document.getElementById('settings_button').addEventListener('click', function (){
+            document.getElementById('history_orders').classList.add('hidden');
+            document.getElementById('profile-page').classList.add('hidden');
+            document.getElementById('user_settings').classList.remove('hidden');
+        })
+    </script>
+{% endblock content %}

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <title>Shop</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function (event) {
+            var height = document.getElementById('content-block').offsetHeight;
+            if (height + 10 < screen.height) {
+                document.getElementById("footer-section").classList.add('fixed-bottom');
+            }
+            else {
+                document.getElementById('footer-section').classList.remove('fixed-bottom')
+            }
+        });
+
+        var user = '{{ request.user }}'
+
+        function getToken(name){
+            var cookieValue = null;
+            if(document.cookie && document.cookie !== ''){
+                var cookies = document.cookie.split(';');
+                for(var i = 0; cookies.length; i++){
+                    var cookie = cookies[i].trim();
+                    if(cookie.substring(0, name.length + 1) === (name + '=')){
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue
+        }
+        var csrftoken = getToken('csrftoken')
+
+        function getCookies(name) {
+		    var cookieArr = document.cookie.split(";");
+
+		    for(var i = 0; i < cookieArr.length; i++) {
+		        var cookiePair = cookieArr[i].split("=");
+
+		        if(name == cookiePair[0].trim()) {
+		            return decodeURIComponent(cookiePair[1]);
+		        }
+		    }
+		    return null;
+		}
+		var cart = JSON.parse(getCookies('cart'))
+
+        if(cart == undefined){
+            cart = {}
+            document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+        }
+        console.log('Cart:', cart)
+    </script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                  <a class="navbar-brand" aria-current="page" href="{% url 'store' %}">Store</a>
+                </li>
+            </ul>
+            <div id="button-cart" class="form-inline my-2 my-lg-0">
+                {% if user %}
+                    <a href="{% url 'profile' %}" class="btn btn-warning">Logged as "{{ user }}"</a>
+                    <a href="{% url 'cart' %}">
+                        <img id="cart-icon" src="{% static 'images/cart.png' %}">
+                    </a>
+                    <p id="cart-total">{{ cartItems }}</p>
+                {% else %}
+                    <a href="{% url 'login_request' %}" class="btn btn-warning">Login</a>
+                    <a href="{% url 'cart' %}">
+                        <img id="cart-icon" src="{% static 'images/cart.png' %}">
+                    </a>
+                    <p id="cart-total">{{ cartItems }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <div class="container" id="content-block">
+        {% block content %}
+
+        {% endblock content %}
+    </div>
+    <br>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
+</body>
+<footer {% if request.path == '/profile/' %} class="hidden" {% else %} class="bg-light text-muted" {% endif %}>
+    <div id="footer-section" class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+        Stefan
+    </div>
+</footer>
+</html>
