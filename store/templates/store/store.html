@@ -2,38 +2,39 @@
 {% load static %}
 
 {% block content %}
-    <div id="loader"></div>
-    <div class="row" id="store-content">
-        {% for product in products %}
-            <div class="col-lg-4">
-                <img class="thumbnail" src="{{ product.imageURL}}">
-                <div class="box-element product">
-                    <h6><strong>{{ product.name }}</strong></h6>
-                    <hr>
-                    <button data-product="{{ product.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
-                    <h4 style="display: inline-block; float: right"><strong>{{ product.price|floatformat:2 }}$</strong></h4>
-                </div>
-            </div>
-        {% endfor %}
+<div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner" style=" width:100%; height:70% !important;">
+    <div class="carousel-item active">
+      <img src="images/books.png" class="img-fluid">
     </div>
-    <script type="text/javascript">
-        document.addEventListener("DOMContentLoaded", function (event) {
-            if (!sessionStorage.getItem('doNotShow')){
-                document.getElementById('store-content').classList.add("hidden");
-                document.getElementById('footer-section').classList.add('hidden');
-                setTimeout(removeLoader, 2000);
-                sessionStorage.setItem('doNotShow', 'true');
-            }
-            else {
-                document.getElementById('loader').remove()
-            }
-
-        })
-
-        function removeLoader(){
-            document.getElementById('loader').remove();
-            document.getElementById('store-content').classList.remove("hidden");
-            document.getElementById('footer-section').classList.remove('hidden');
-        }
-    </script>
+    <div class="carousel-item">
+      <img src="images/book.png" class="d-block w-100">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div> 
+<div class="container justify-content-center">
+  <div class="row">
+    <div class="col-sm"></div>
+    <div class="col-8 col-sm-10 text-center text-white" id="title-text">This is an eCommerce website for three specific categories - books, t-shirts and watches. Each of these categories contains specific products. On this page you will find the best products from these categories. We hope you enjoy and use this eCommerce website.</div>
+    <div class="col-sm"></div>      
+  </div>
+  <div class="row">
+    {% for product in products %}
+      <div class="col-lg-4">
+        <img class="thumbnail" src="{{ product.imageURL}}">
+        <div class="box-element product text-center">
+          <h6><strong>{{ product.name }}</strong></h6>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
 {% endblock content %}

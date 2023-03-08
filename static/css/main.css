@@ -1,28 +1,71 @@
 body{
-	background-color: hsl(0, 0%, 98%);
+	background-color: #A8A9AD;
+	overflow-x: hidden;
 }
 
-#loader {
-	margin-left: 45%;
-	margin-top: 15%;
-  	border: 16px solid #f3f3f3;
-  	border-top: 16px solid #3498db;
-  	border-radius: 50%;
- 	width: 120px;
-	height: 120px;
-  	animation: spin 1s linear infinite;
+#title-text{
+	padding: 1.5%;
+	margin-top: 1.5%;
+	margin-bottom: 1.5%;
+	background-color: #323334;
+	border-radius: 9px;
+	display: block;
+  	margin-left: auto;
+  	margin-right: auto;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+#contact-text{
+	padding-top: 3%;
+	padding-bottom: 3%;
+	margin-top: 6%;
+	background-color: #323334;
+	border-radius: 9px;
+	display: block;
+}
+
+#pre{
+	margin-bottom: 0;
+	font-size: 1rem;
+}
+
+.btn.btn-primary{
+	padding-left: 39%;
+	padding-right: 39%;
+}
+
+.btn.btn-secondary{
+	margin-top: 3%;
+	padding-left: 39%;
+	padding-right: 39%;
+}
+
+.btn.btn-primary.login-btn, .btn.btn-success.register-btn{
+	padding-left: 5%;
+	padding-right: 5%;
 }
 
 .box-element{
 	box-shadow:hsl(0, 0%, 80%) 0 0 16px;
 	background-color: #fff;
-	border-radius: 4px;
-	padding: 10px;
+	padding: 3%;
+}
+
+.box-cart{
+	margin: 1%;
+}
+
+.box-element.profile-buttons{
+	margin: 3%;
+	padding: 6%;
+}
+
+.box-element.profile,.box-element.history, .box-element.settings{
+	margin: 1%;
+}
+
+.box-register{
+	padding-left: 9%;
+	padding-right: 9%;
 }
 
 .thumbnail{
@@ -34,9 +77,10 @@ body{
 }
 
 #cart-icon{
-	width:25px;
+	width: 25px;
 	display: inline-block;
-	margin-left: 15px;
+	margin-left: 3px;
+	margin-bottom: 6px;
 }
 
 #cart-total{
@@ -48,6 +92,30 @@ body{
 	height: 25px;
 	border-radius: 50%;
 	font-size: 14px;
+}	
+
+.cart{
+	flex: 0 0 0%;
+}
+
+.cart-number{
+	margin:0%;
+	padding:0%;
+}
+
+.cart-row{
+	display: flex;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ececec;
+}
+
+.form-group{
+	margin-bottom: 3%;
+}
+
+#responsive-nav-bar{
+	padding-right: 300px;
 }
 
 .col-lg-4, .col-lg-6, .col-lg-8, .col-lg-12{
@@ -59,16 +127,9 @@ body{
 }
 
 .form-field{
-	width:250px;
+	width: 250px;
 	display: inline-block;
 	padding: 5px;
-}
-
-.cart-row{
-	display: flex;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #ececec;
 }
 
 .quantity{
@@ -89,30 +150,41 @@ body{
 	opacity: .6;
 }
 
-.hidden{
-	display: none!important;
-}
-
 .profile-img{
 	position: relative;
-	margin-left: 35%;
+	margin-left: 47%;
 	margin-top: 2.5%;
-	width: 30%;
-	height: 30%;
+	width: 6%;
+	height: 6%;
 	border-radius: 50%;
 }
 
 .circle {
     position: absolute;
-	left: 33.5%;
+	left: 55.5%;
+	margin-top: 1.25%;
     border-radius: 50%;
     border: 10px dotted #482d87;
-	width: 250px;
-    height: 250px;
+	width: 90px;
+	height: 90px;
     box-shadow: 0 0 0 9px #482d87;
     animation-name: spinning-circle;
     animation-duration: 20s;
     animation-iteration-count: infinite;
+}
+
+.info-message{
+	position: absolute;
+	z-index: 1;
+	text-align: center;
+	margin-top: 3px;
+	margin-left: 23%;
+	background-color: #c9eaf2;
+	padding: 1%;
+	padding-left: 6%;
+	padding-right: 6%;
+	border-radius: 25px;
+	position: fixed;
 }
 
 @-webkit-keyframes spinning-circle {
@@ -120,7 +192,7 @@ body{
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
     }
-
+	
     100% {
         -webkit-transform: rotate(360deg);
         transform: rotate(360deg);

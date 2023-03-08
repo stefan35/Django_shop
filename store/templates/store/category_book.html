@@ -1,0 +1,70 @@
+{% extends 'store/categories.html' %}
+{% load static %}
+
+{% block filters %}
+<form method="POST">
+  {% csrf_token %}
+  <div class="form-check">
+    <input class="form-check-input" name="checkbox1" type="checkbox" {% if filters.checkbox1 %} checked {% endif %} value="fantasy">
+    <label class="form-check-label">
+      Fantasy
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" name="checkbox2" type="checkbox" {% if filters.checkbox2 %} checked {% endif %} value="adventure">
+    <label class="form-check-label">
+      Adventure
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" name="checkbox3" type="checkbox" {% if filters.checkbox3 %} checked {% endif %} value="drama">
+    <label class="form-check-label">
+      Drama
+    </label>
+  </div>
+  <hr>
+  <div>
+    <label for="customRange1" class="form-label">Price of book</label>
+    <br>
+      from
+    <input style="border-radius:10%;" id="min_price" type="text" name="min_price" maxlength="4" size="3" min="1" value={% if filters.min_price != None %} {{filters.min_price}} {% endif %}>         
+      to 
+    <input style="border-radius:10%;" id="max_price" type="text" name="max_price" maxlength="4" size="4" value={% if filters.max_price != None %} {{filters.max_price}} {% endif %}> 
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+  <hr>
+  <div style="text-align:center;">
+    <input type="submit" class="btn btn-primary" value="Filter">
+  </div>
+</form>
+<form method="POST">
+  {% csrf_token %}
+  <div style="text-align:center;">
+    <input type="submit" class="btn btn-secondary" value="Reset">
+  </div>
+</form>
+<hr>
+</div>
+<div class="col">
+  <div id="info-message" class="info-message d-none">Book successfully added! <i class="fa-solid fa-check"></i></div>
+  <div class="row">
+    {% for product in products %}
+    <div class="col-lg-4">
+      <img class="thumbnail" src="{{ product.imageURL}}">
+      <div class="box-element product text-center">
+        <h6><strong>{{ product.name }}</strong></h6>
+        <hr>
+        <h4 style="display:inline-block"><strong>{{ product.price|floatformat:2 }}€</strong></h4>
+        <button data-product="{{ product.id }}" data-action="add" class="btn btn-outline-success add-btn update-cart" style="display:inline-block; float:right">Add to Cart</button>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock filters %}

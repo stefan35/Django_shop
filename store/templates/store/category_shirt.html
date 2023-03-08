@@ -1,0 +1,133 @@
+{% extends 'store/categories.html' %}
+{% load static %}
+
+{% block filters %}     
+<p>All T-Shirts are unisex</p>
+<hr>
+<p>Select color of T-Shirt</p>
+<form method="POST">
+  {% csrf_token %}
+  <div class="form-check">
+    <input class="form-check-input" value="olive" name="checkbox1" type="checkbox" {% if filters.checkbox1 %} checked {% endif %} style="background-color: #163f13 !important;box-shadow:None;border:None;">
+    <label class="form-check-label">
+      Olive
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" value="green" name="checkbox2" type="checkbox" {% if filters.checkbox2 %} checked {% endif %} style="background-color: #194c4d !important;box-shadow:None;border:None;">
+    <label class="form-check-label">
+      Green
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" value="purple" name="checkbox3" type="checkbox" {% if filters.checkbox3 %} checked {% endif %} style="background-color: #612268 !important;box-shadow:None;border:None;">
+    <label class="form-check-label">
+      Purple
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" value="lime_green" name="checkbox4" type="checkbox" {% if filters.checkbox4 %} checked {% endif %} style="background-color: #69900f !important;box-shadow:None;border:None;">
+    <label class="form-check-label">
+      Lime Green
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" value="turquoise" name="checkbox5" type="checkbox" {% if filters.checkbox5 %} checked {% endif %} style="background-color: #3ebdbc !important;box-shadow:None;border:None;">
+    <label class="form-check-label">
+      Turquoise
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" value="light_red" name="checkbox6" type="checkbox" {% if filters.checkbox6 %} checked {% endif %} style="background-color: #d17777 !important;box-shadow:None;border:None;">
+    <label class="form-check-label">
+      Light Red
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" value="blue" name="checkbox7" type="checkbox" {% if filters.checkbox7 %} checked {% endif %} style="background-color: #4b53c2 !important;box-shadow:None;border:None;">
+    <label class="form-check-label">
+      Blue
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" value="wine" name="checkbox8" type="checkbox" {% if filters.checkbox8 %} checked {% endif %} style="background-color: #451e39 !important;box-shadow:None;border:None;">
+    <label class="form-check-label">
+      Wine
+    </label>
+  </div>
+  <hr>
+  <div>
+    <label for="customRange1" class="form-label">Price of T-Shirt</label>
+    <br>
+      from
+    <input style="border-radius: 10%;" id="min_price" type="text" name="min_price" maxlength="4" size="3" min="1" value={% if filters.min_price != None %} {{filters.min_price}} {% endif %}>         
+      to 
+    <input style="border-radius: 10%;" id="max_price" type="text" name="max_price" maxlength="4" size="4" value={% if filters.max_price != None %} {{filters.max_price}} {% endif %}> 
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    <hr>
+    <div style="text-align:center;">
+      <input type="submit" class="btn btn-primary" value="Filter">
+    </div>
+  </div>
+</form>
+<form method="POST">
+  {% csrf_token %}
+  <div style="text-align:center;">
+    <input type="submit" class="btn btn-secondary" value="Reset">
+  </div>
+</form>
+<hr>   
+</div>
+<div class="col">
+  <div id="info-message" class="info-message d-none">T-shirt successfully added! <i class="fa-solid fa-check"></i></div>
+  <div class="row">
+    {% for product in products %}
+      <div class="col-lg-4">
+        <img class="thumbnail" src="{{ product.imageURL}}">
+        <div class="box-element text-center">
+          <h6><strong>{{ product.name }}</strong></h6>
+          <p><small>
+          {% for size in product.filters.size %}
+            {{ size }}{% if  forloop.counter < product.filters.size|length %},{% endif %}
+          {% endfor %}
+          </small></p>
+          <label for="cars">Select size:</label>
+          <select id="{{ product.filters.color }}_select" name="pitcher" class="size-dropdown">
+          <option disabled selected value> </option>
+            {% for size in product.filters.size %}
+              <option>{{ size }}</option>
+            {% endfor %}
+          </select>
+          <hr>
+          <h4 style="display:inline-block"><strong>{{ product.price|floatformat:2 }}€</strong></h4>
+          <button onclick="check(this.id, '{{ product.id }}' )" id={{ product.filters.color }}  data-product="{{ product.id }}" data-action="add" class="btn btn-outline-success add-btn" style="display:inline-block; float:right">Add to Cart</button>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+<script>
+function check(id, product){
+  specific_color = id.concat("_select")
+
+  if(document.getElementById((specific_color)).value){
+    document.getElementById('info-message').classList.remove("d-none")
+
+    if(user == 'AnonymousUser')
+      setTimeout(function(){
+        addCookieItem(product, "add", document.getElementById((specific_color)).value)}, 
+        1000)        
+    else
+      setTimeout(function(){
+        updateUserOrder(product, "add", document.getElementById((specific_color)).value)}, 
+        1000)
+  }
+}
+</script>
+{% endblock filters %}

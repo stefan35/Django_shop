@@ -1,5 +1,6 @@
 <h3 style="text-align: center">Check your information</h3>
 <h6 style="text-align: center">Change information if you want or if information is out of date</h6>
+<h6 style="text-align: center">Here yo can also change password</h6>
 <form method="POST">
   {% csrf_token %}
   <div class="form-group">
@@ -7,36 +8,55 @@
     <input name="username" type="text" class="form-control" id="username" value="{{ user.username }}" readonly>
   </div>
   <div class="form-group">
-    <label for="user_name">Name</label>
-    <input name="user_name" type="text" class="form-control" id="user_name" value="{{ user.name }}">
+    <label for="user_name">Full Name</label>
+    {{form.name}}
+  </input>
   </div>
   <div class="form-group">
     <label for="user_email">E-mail</label>
-    <input name="user_email" type="text" class="form-control" id="user_email" value="{{ user.email }}">
+    {{form.email}}
   </div>
   <div class="form-group">
-    <label for="user_password1">Password</label>
-    <input name="user_password1" type="password" class="form-control" id="user_password1" placeholder="Enter new password">
+    <label for="user_password1">New Password</label>
+    {{form.password1}}
   </div>
   <div class="form-group">
-    <label for="user_password2">Password</label>
-    <input name="user_password2" type="password" class="form-control" id="user_password2" placeholder="Repeat new password">
+    <label for="user_password2">Repeat New Password</label>
+    {{form.password2}}
   </div>
   <div class="form-group">
     <label for="user_address">Address</label>
-    <input name="user_address" type="text" class="form-control" id="user_address" value="{{ user.address }}">
+    {{form.address}}
   </div>
   <div class="form-group">
     <label for="user_city">City</label>
-    <input name="user_city" type="text" class="form-control" id="user_city" value="{{ user.city }}">
+    {{form.city}}
   </div>
   <div class="form-group">
     <label for="user_psc">PSC</label>
-    <input name="user_psc" type="text" class="form-control" id="user_psc" value="{{ user.psc }}">
+    {{form.psc}}
   </div>
   <div class="form-group">
     <label for="user_country">Country</label>
-    <input name="user_country" type="text" class="form-control" id="user_country" value="{{ user.country }}">
+    {{form.country}}
   </div>
-    <button type="submit" class="btn btn-primary">Save information</button>
+  <div class="container">
+    <div class="row">
+      <div class="col text-center">
+        <button type="submit" class="btn btn-primary">Save information</button>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div>
+    {% if messages %}
+      {% for message in messages %}
+        <div id="message" class="container-fluid p-0">
+         <div class="alert {{ message.tags }} alert-dismissiblecenter" role="alert">
+            {{ message }}
+          </div>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
 </form>

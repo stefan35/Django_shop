@@ -1,0 +1,30 @@
+{% extends 'store/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-lg-2">
+      <br>
+      <h4>Filters</h4>
+      <hr>
+      {% block filters %}
+      {% endblock filters %}
+    </div>
+  </div>
+</div>
+<br>
+<script>
+  var regex = /[0-9]/
+  
+  document.getElementById("min_price").onkeypress = function(e) {
+    if(!regex.test(e.key) || (document.getElementById("min_price").value == "0" && (e.key > 0 || e.key == 0)))
+      return false
+  }
+  
+  document.getElementById("max_price").onkeypress = function(e) {
+    if(!regex.test(e.key) || (document.getElementById("max_price").value == "0" && (e.key > 0 || e.key == 0)))
+      return false
+  }
+</script>
+{% endblock content %}
