@@ -1,13 +1,29 @@
-# Online Shop - Web Application
+# eCommerce - Web Application
 
-This project is web application - simple online shop. In this shop user can do:
+This project is eCommerce web application. This web application was created using Python(Django framework), JavaScript, HTML(Django template), CSS and Bootstrap 5.3
+On this web application user can do:
 
- - add product into cart, logged in user/not logged in user
- - remove product from cart, logged in user/not logged in user
- - create order, logged in user/not logged in user
- - create account, not logged in user
- - login and logout, logged in user
- - change information about created account, logged in user
- - see created orders, logged in user
+### Functions
+ - create account
+ - login and logout
+ - add product into cart
+	  - can use filters
+ - remove product from cart
+ - create order
+ - change information about user, only logged user
+ - see created orders, only logged user
 
-For created this project was used JavaScript, HTML(Django templates), CSS, Bootstrap and Python - Django web framework.
+### How to run website
+1. go to folder where is manage.py file
+2. run command in terminal - python manage.py runserver
+
+## Screenshot of website
+
+#### Main page
+![](static/images/main_page.png)
+
+#### T-Shirt category
+![](static/images/t-shirt_page.png)
+
+####Cart
+![](static/images/cart_page.png)
