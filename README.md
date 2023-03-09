@@ -1,7 +1,8 @@
 # eCommerce - Web Application
 
 This project is eCommerce web application. This web application was created using Python(Django framework), JavaScript, HTML(Django template), CSS and Bootstrap 5.3
-On this web application user can do:
+
+This is also responsive web application. On this web application user can do:
 
 ### Functions
  - create account
