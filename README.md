@@ -26,5 +26,5 @@ This is also responsive web application. On this web application user can do:
 #### T-Shirt category
 ![](static/images/t-shirt_page.png)
 
-####Cart
+#### Cart
 ![](static/images/cart_page.png)
